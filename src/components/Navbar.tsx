@@ -2,7 +2,7 @@ import React from 'react';
 
 const Navbar: React.FC = () => {
   return (
-    <nav className="bg-navbar-color p-4 rounded-b-lg shadow-md">
+    <nav className="bg-navbar-color p-4 shadow-md">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <a href="/" className="text-2xl font-bold text-gray-800">
           Capellanía UP

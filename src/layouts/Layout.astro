@@ -1,5 +1,6 @@
 ---
 import Navbar from "../components/Navbar.tsx";
+import Footer from "../components/Footer.tsx";
 import type { ReactNode } from "react";
 
 interface LayoutProps {
@@ -8,22 +9,20 @@ interface LayoutProps {
 }
 ---
 
-<html lang="es">
+<html lang="es" class="h-full">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{Astro.props.title}</title>
     <link rel="stylesheet" href="/src/styles/global.css" />
   </head>
-  <body class="bg-page-color text-gray-900">
+  <body class="bg-page-color text-gray-900 h-full flex flex-col">
     <Navbar />
-    <main class="max-w-7xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-8">
+    <main
+      class="flex-grow max-w-7xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-8"
+    >
       <slot />
     </main>
-    <footer
-      class="bg-navbar-color p-4 text-center text-gray-800 mt-8 rounded-t-lg"
-    >
-      © 2024 Capellanía UP
-    </footer>
+    <Footer />
   </body>
 </html>

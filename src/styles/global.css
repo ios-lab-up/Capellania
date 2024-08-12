@@ -4,12 +4,12 @@
 
 /* Colores personalizados */
 :root {
-  --navbar-color: #f0d8be;
-  --page-color: #f0d8be;
-  --primary-text-color: #333333;
+  --navbar-color: #f0d8be; /* Color para el navbar y el footer */
+  --page-color: #f9efe4; /* Color de fondo de la página */
+  --primary-text-color: #333333; /* Color del texto */
 }
 
-/* Aplicar el fondo a toda la página */
+/* Aplicar el fondo personalizado a toda la página */
 body {
   background-color: var(--page-color);
   color: var(--primary-text-color);

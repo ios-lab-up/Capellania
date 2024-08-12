@@ -1,0 +1,38 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const title = "Sobre Nosotros";
+---
+
+<Layout title={title}>
+  <section class="bg-white p-8 rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold text-gray-800 mb-4">Sobre Nosotros</h1>
+    <p class="text-gray-700 leading-relaxed mb-6">
+      La Capellanía UP es un espacio dedicado a acompañar espiritualmente a la
+      comunidad universitaria, ofreciendo orientación, apoyo y actividades que
+      fomentan el crecimiento personal y la fe.
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">
+          Nuestra Misión
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          Nuestro objetivo es crear un ambiente de acogida y reflexión, donde
+          los estudiantes y el personal puedan fortalecer sus valores y
+          encontrar respuestas a las preguntas más profundas de la vida.
+        </p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">
+          Nuestros Valores
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 leading-relaxed">
+          <li>Compromiso con la fe y el servicio.</li>
+          <li>Respeto y apoyo a la diversidad cultural y espiritual.</li>
+          <li>Fomento del diálogo y la reflexión crítica.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</Layout>

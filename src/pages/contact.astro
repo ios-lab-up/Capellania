@@ -1,0 +1,61 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const title = "Contacto";
+---
+
+<Layout title={title}>
+  <section class="bg-white p-8 rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold text-gray-800 mb-4">Contacto</h1>
+    <p class="text-gray-700 leading-relaxed mb-6">
+      Si tienes alguna pregunta o necesitas asistencia, no dudes en ponerte en
+      contacto con nosotros. Estamos aquí para ayudarte.
+    </p>
+    <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="col-span-2">
+        <label for="name" class="block text-gray-700">Nombre Completo</label>
+        <input
+          type="text"
+          id="name"
+          class="w-full mt-2 p-2 border rounded-md"
+          required
+        />
+      </div>
+      <div>
+        <label for="email" class="block text-gray-700">Correo Electrónico</label
+        >
+        <input
+          type="email"
+          id="email"
+          class="w-full mt-2 p-2 border rounded-md"
+          required
+        />
+      </div>
+      <div>
+        <label for="subject" class="block text-gray-700">Asunto</label>
+        <input
+          type="text"
+          id="subject"
+          class="w-full mt-2 p-2 border rounded-md"
+          required
+        />
+      </div>
+      <div class="col-span-2">
+        <label for="message" class="block text-gray-700">Mensaje</label>
+        <textarea
+          id="message"
+          class="w-full mt-2 p-2 border rounded-md"
+          rows="6"
+          required></textarea>
+      </div>
+      <div class="col-span-2">
+        <button
+          type="submit"
+          class="bg-navbar-color text-white py-2 px-4 rounded-md shadow hover:bg-gray-600 transition-colors"
+        >
+          Enviar
+        </button>
+      </div>
+    </form>
+  </section>
+</Layout>
