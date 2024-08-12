@@ -1,12 +1,6 @@
 ---
-import Navbar from "../components/Navbar.tsx";
-import Footer from "../components/Footer.tsx";
-import type { ReactNode } from "react";
-
-interface LayoutProps {
-  children: ReactNode;
-  title: string;
-}
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 ---
 
 <html lang="es" class="h-full">
@@ -16,7 +10,14 @@ interface LayoutProps {
     <title>{Astro.props.title}</title>
     <link rel="stylesheet" href="/src/styles/global.css" />
   </head>
-  <body class="bg-page-color text-gray-900 h-full flex flex-col">
+  <body class="bg-page-color text-gray-900 h-full flex flex-col relative">
+    <!-- Logo de la Universidad en la esquina superior izquierda -->
+    <img
+      src="uplogo.png"
+      alt="UP Logo"
+      class="absolute top-4 left-4 h-12 w-12 object-contain z-50"
+    />
+
     <Navbar />
     <main
       class="flex-grow max-w-7xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-8"

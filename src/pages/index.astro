@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Directory from "../components//Directory";
+import Directory from "../components/Directory";
 
 // Datos de ejemplo de capellanes
 const capellanes = [
@@ -11,7 +11,14 @@ const capellanes = [
     image: "/images/capellan1.jpg",
     bio: "El Padre Juan Pérez ha servido en nuestra universidad durante más de 10 años...",
   },
-  // Más capellanes...
+  {
+    id: 2,
+    name: "Padre Miguel Sánchez",
+    title: "Capellán Auxiliar",
+    image: "/images/capellan2.jpg",
+    bio: "El Padre Miguel Sánchez es un miembro reciente del equipo y ha contribuido significativamente...",
+  },
+  // Puedes agregar más capellanes aquí...
 ];
 ---
 
@@ -19,7 +26,8 @@ const capellanes = [
   <main class="max-w-7xl mx-auto p-8">
     <h1 class="text-4xl font-bold mb-8">Bienvenidos a la Capellanía</h1>
     <p class="text-xl mb-8">
-      Nuestra misión es servir a la comunidad universitaria...
+      Nuestra misión es servir a la comunidad universitaria proporcionando apoyo
+      espiritual y fomentando el crecimiento personal.
     </p>
     <h2 class="text-3xl font-semibold mb-4">Directorio de Capellanes</h2>
     <Directory capellanes={capellanes} />

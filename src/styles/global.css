@@ -11,8 +11,7 @@
 
 /* Aplicar el fondo personalizado a toda la página */
 body {
-  background-color: var(--page-color);
-  color: var(--primary-text-color);
+  @apply bg-page-color text-primary-text-color;
   font-family: "Inter", sans-serif;
 }
 
@@ -24,6 +23,11 @@ body {
   background-color: var(--page-color);
 }
 
+.text-primary-text-color {
+  color: var(--primary-text-color);
+}
+
+/* Estilos para enlaces */
 a {
   color: var(--primary-text-color);
   text-decoration: none;
