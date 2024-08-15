@@ -1,19 +1,19 @@
-// server/routes/masses.js
+// server/routes/readings.js
 const express = require('express');
 const { authenticateToken, authorizeAdmin } = require('../middleware/auth');
-const Mass = require('../models/Mass');
+const Reading = require('../models/Reading');
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const masses = await Mass.findAll();
-  res.json(masses);
+  const readings = await Reading.findAll();
+  res.json(readings);
 });
 
 router.post('/', authenticateToken, authorizeAdmin, async (req, res) => {
-  const { date, time, description } = req.body;
-  const newMass = await Mass.create({ date, time, description });
-  res.json(newMass);
+  const { title, content } = req.body;
+  const newReading = await Reading.create({ title, content });
+  res.json(newReading);
 });
 
 module.exports = router;

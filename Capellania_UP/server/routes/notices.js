@@ -1,19 +1,19 @@
-// server/routes/masses.js
+// server/routes/notices.js
 const express = require('express');
 const { authenticateToken, authorizeAdmin } = require('../middleware/auth');
-const Mass = require('../models/Mass');
+const Notice = require('../models/Notice');
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const masses = await Mass.findAll();
-  res.json(masses);
+  const notices = await Notice.findAll();
+  res.json(notices);
 });
 
 router.post('/', authenticateToken, authorizeAdmin, async (req, res) => {
-  const { date, time, description } = req.body;
-  const newMass = await Mass.create({ date, time, description });
-  res.json(newMass);
+  const { title, content } = req.body;
+  const newNotice = await Notice.create({ title, content });
+  res.json(newNotice);
 });
 
 module.exports = router;

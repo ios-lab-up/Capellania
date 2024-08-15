@@ -1,19 +1,19 @@
-// server/routes/masses.js
+// server/routes/events.js
 const express = require('express');
 const { authenticateToken, authorizeAdmin } = require('../middleware/auth');
-const Mass = require('../models/Mass');
+const Event = require('../models/Event');
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const masses = await Mass.findAll();
-  res.json(masses);
+  const events = await Event.findAll();
+  res.json(events);
 });
 
 router.post('/', authenticateToken, authorizeAdmin, async (req, res) => {
-  const { date, time, description } = req.body;
-  const newMass = await Mass.create({ date, time, description });
-  res.json(newMass);
+  const { title, date, description } = req.body;
+  const newEvent = await Event.create({ title, date, description });
+  res.json(newEvent);
 });
 
 module.exports = router;
