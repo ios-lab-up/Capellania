@@ -1,7 +1,7 @@
 // server/server.js
 const express = require('express');
 const cors = require('cors');
-const pool = require('./config/db');
+const pool = require('./config/database');  
 const app = express();
 
 app.use(cors());
