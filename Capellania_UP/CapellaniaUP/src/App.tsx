@@ -1,26 +1,23 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
-import Home from './pages/Home';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import DashboardHome from './pages/dashboard/DashboardHome';
+import AddMass from './pages/dashboard/AddMass';
+import Home from './pages/public/Home';
+import ViewMasses from './pages/public/ViewMasses';
 
 const App: React.FC = () => {
-  const isAuthenticated = true; // Lógica para verificar autenticación
-  const userRole = 'admin'; // Lógica para obtener el rol del usuario
-
   return (
     <Router>
       <Routes>
-        <Route
-          path="/dashboard"
-          element={
-            isAuthenticated && userRole === 'admin' ? (
-              <Dashboard />
-            ) : (
-              <Navigate to="/" />
-            )
-          }
-        />
+        {/* Rutas para el dashboard */}
+        <Route path="/dashboard" element={<DashboardHome />} />
+        <Route path="/dashboard/add-mass" element={<AddMass />} />
+        {/* Agregar otras rutas del dashboard */}
+
+        {/* Rutas para la página pública */}
         <Route path="/" element={<Home />} />
+        <Route path="/masses" element={<ViewMasses />} />
+        {/* Agregar otras rutas públicas */}
       </Routes>
     </Router>
   );
