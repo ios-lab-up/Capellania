@@ -1,25 +1,43 @@
 // server/server.js
 const express = require('express');
 const cors = require('cors');
-const sequelize = require('./config/database');
-const authRoutes = require('./routes/auth');
-const massesRoutes = require('./routes/masses');
-const eventsRoutes = require('./routes/events');
-const readingsRoutes = require('./routes/readings');
-const noticesRoutes = require('./routes/notices');
-
+const pool = require('./config/db');
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/auth', authRoutes);
-app.use('/api/masses', massesRoutes);
-app.use('/api/events', eventsRoutes);
-app.use('/api/readings', readingsRoutes);
-app.use('/api/notices', noticesRoutes);
+// Ruta de prueba
+app.get('/', (req, res) => {
+  res.send('API corriendo');
+});
 
-sequelize.sync().then(() => {
-  app.listen(5000, () => {
-    console.log('Servidor corriendo en el puerto 5000');
-  });
+// Obtener todas las misas
+app.get('/api/masses', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM masses');
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener las misas' });
+  }
+});
+
+// Crear una nueva misa
+app.post('/api/masses', async (req, res) => {
+  const { date, time, description } = req.body;
+
+  try {
+    const result = await pool.query(
+      'INSERT INTO masses (date, time, description) VALUES ($1, $2, $3) RETURNING *',
+      [date, time, description]
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al crear la misa' });
+  }
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
