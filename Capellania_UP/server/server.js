@@ -96,6 +96,8 @@ app.post('/api/notices', authenticateToken, authorizeCapellan, async (req, res) 
   }
 });
 
+// Rutas públicas para obtener datos
+
 // Obtener todas las misas
 app.get('/api/masses', async (req, res) => {
   try {
