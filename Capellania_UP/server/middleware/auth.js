@@ -1,4 +1,3 @@
-// server/middleware/auth.js
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
@@ -15,11 +14,11 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
-const authorizeAdmin = (req, res, next) => {
-  if (req.user.role !== 'admin') {
+const authorizeCapellan = (req, res, next) => {
+  if (req.user.role !== 'capellan') {
     return res.sendStatus(403);
   }
   next();
 };
 
-module.exports = { authenticateToken, authorizeAdmin };
+module.exports = { authenticateToken, authorizeCapellan };
