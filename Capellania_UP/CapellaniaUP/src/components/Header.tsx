@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FaCross } from 'react-icons/fa'; // Asegúrate de estar usando el icono correcto
 import useUser from '../context/useUser';
 
 const Header: React.FC = () => {
@@ -10,11 +11,14 @@ const Header: React.FC = () => {
       <div className="container mx-auto flex justify-between items-center px-6">
         {/* Logo o Título */}
         <div className="flex items-center space-x-4">
-          <h1 className="text-3xl font-extrabold text-[#4A403A] hover:text-[#362F2D] transition">
+          <Link to="/" className="text-3xl font-extrabold text-[#4A403A] hover:text-[#362F2D] transition">
             Capellanía UP
-          </h1>
+          </Link>
           {role === 'capellan' && (
-            <span className="ml-4 px-4 py-1 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white text-sm font-medium rounded-full shadow">
+            <span className="flex items-center ml-4 px-4 py-1 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white text-sm font-medium rounded-full shadow">
+              <span className="mr-2">
+                <FaCross />
+              </span>
               Modo Capellán
             </span>
           )}
