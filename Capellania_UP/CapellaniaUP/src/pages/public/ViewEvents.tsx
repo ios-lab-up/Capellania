@@ -25,37 +25,30 @@ const ViewEvents: React.FC = () => {
   }, []);
 
   const handleDelete = async (id: number) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token'); // Obtén el token del localStorage
 
     if (!token) {
-      console.error('No token found');
+      console.error('No hay token disponible');
       return;
     }
 
     try {
       await axios.delete(`http://localhost:5000/api/events/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // Asegúrate de incluir el token aquí
         },
       });
-      setEvents(events.filter(event => event.id !== id));
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        // Handle errors thrown by axios
-        if (err.response) {
-          if (err.response.status === 403) {
-            console.error('No tienes permiso para eliminar este evento.');
-          } else if (err.response.status === 401) {
-            console.error('No estás autenticado.');
-          } else {
-            console.error('Error al eliminar el evento:', err.response.data);
-          }
+      setEvents(events.filter(event => event.id !== id)); // Actualiza el estado de los eventos
+      console.log('Evento eliminado');
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          console.error('No tienes permiso para eliminar este evento:', error.response.data);
         } else {
-          console.error('Error al eliminar el evento:', err.message);
+          console.error('Error al eliminar el evento:', error.message);
         }
       } else {
-        // Handle other types of errors
-        console.error('Unexpected error:', err);
+        console.error('Error inesperado:', error);
       }
     }
   };
