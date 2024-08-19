@@ -15,10 +15,15 @@ const Login: React.FC = () => {
         email,
         password,
       });
-      localStorage.setItem('token', response.data.token);
+      const token = response.data.token;
+      localStorage.setItem('token', token);
+      
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      localStorage.setItem('role', decodedToken.role); // Guardar el rol en localStorage
+
       navigate('/dashboard');
     } catch (err) {
-      console.error('Error al iniciar sesión:', err);  // Aquí se utiliza la variable `err`
+      console.error(err);  // Aquí utilizamos la variable err
       setError('Credenciales incorrectas.');
     }
   };

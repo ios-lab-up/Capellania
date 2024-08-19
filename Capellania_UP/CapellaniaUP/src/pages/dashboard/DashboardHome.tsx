@@ -1,11 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Asegúrate de tener esta línea
+import { Link } from 'react-router-dom';
 
 const DashboardHome: React.FC = () => {
+  const role = localStorage.getItem('role');
+
   return (
     <div className="min-h-screen bg-[#F0D8BE] flex items-center justify-center">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Dashboard de Capellanía</h1>
+        
+        {role === 'capellan' && (
+          <p className="text-xl text-green-600 mb-6 text-center">Estás en modo Capellán</p>
+        )}
+
         <nav>
           <ul className="space-y-4">
             <li>
