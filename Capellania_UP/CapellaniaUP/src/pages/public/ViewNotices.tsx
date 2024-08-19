@@ -9,16 +9,49 @@ interface Notice {
 
 const ViewNotices: React.FC = () => {
   const [notices, setNotices] = useState<Notice[]>([]);
+  const role = localStorage.getItem('role'); // Obtén el rol del usuario autenticado
+
+  const fetchNotices = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/notices');
+      setNotices(response.data);
+    } catch (error) {
+      console.error('Error al obtener los avisos:', error);
+    }
+  };
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/notices')
-      .then(response => {
-        setNotices(response.data);
-      })
-      .catch(error => {
-        console.error("Error al obtener los avisos:", error);
-      });
+    fetchNotices();
   }, []);
+
+  const handleDelete = async (id: number) => {
+    const token = localStorage.getItem('token'); // Obtén el token del localStorage
+
+    try {
+      await axios.delete(`http://localhost:5000/api/notices/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Asegúrate de incluir el token aquí
+        },
+      });
+      setNotices(notices.filter(notice => notice.id !== id)); // Actualiza el estado de los avisos
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        if (err.response) {
+          if (err.response.status === 403) {
+            console.error('No tienes permiso para eliminar este aviso.');
+          } else if (err.response.status === 401) {
+            console.error('No estás autenticado.');
+          } else {
+            console.error('Error al eliminar el aviso:', err.response.data);
+          }
+        } else {
+          console.error('Error al eliminar el aviso:', err.message);
+        }
+      } else {
+        console.error('Unexpected error:', err);
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#F9EFE4] to-[#F0D8BE] flex flex-col items-center justify-center p-8">
@@ -30,6 +63,14 @@ const ViewNotices: React.FC = () => {
               <div key={notice.id} className="bg-white shadow-lg rounded-lg p-6 transform hover:scale-105 transition">
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">{notice.title}</h3>
                 <p className="text-gray-600 mt-4">{notice.content}</p>
+                {role === 'capellan' && (
+                  <button
+                    onClick={() => handleDelete(notice.id)}
+                    className="mt-4 py-2 px-4 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 transition"
+                  >
+                    Eliminar
+                  </button>
+                )}
               </div>
             ))
           ) : (
