@@ -1,39 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-interface Notice {
+interface Event {
   id: number;
   title: string;
-  content: string;
+  date: string;
+  description: string;
 }
 
-const ViewNotices: React.FC = () => {
-  const [notices, setNotices] = useState<Notice[]>([]);
+const ViewEvents: React.FC = () => {
+  const [events, setEvents] = useState<Event[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/notices')
+    axios.get('http://localhost:5000/api/events')
       .then(response => {
-        setNotices(response.data);
+        setEvents(response.data);
       })
       .catch(error => {
-        console.error("Error al obtener los avisos:", error);
+        console.error("Error al obtener los eventos:", error);
       });
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#F9EFE4] to-[#F0D8BE] flex flex-col items-center justify-center p-8">
-      <div className="container mx-auto p-8">
-        <h1 className="text-5xl font-bold text-gray-800 mb-8 text-center">Avisos Recientes</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {notices.length > 0 ? (
-            notices.map(notice => (
-              <div key={notice.id} className="bg-white shadow-lg rounded-lg p-6 transform hover:scale-105 transition">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">{notice.title}</h3>
-                <p className="text-gray-600 mt-4">{notice.content}</p>
+    <div className="min-h-screen bg-gradient-to-b from-[#E0EAFB] to-[#C2D7F0] flex items-center justify-center p-8">
+      <div className="bg-white shadow-2xl rounded-xl p-10 max-w-2xl w-full">
+        <h1 className="text-4xl font-bold text-center text-[#4A5568] mb-10">Eventos Programados</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {events.length > 0 ? (
+            events.map(event => (
+              <div key={event.id} className="bg-gradient-to-r from-[#6B46C1] to-[#9F7AEA] shadow-lg rounded-lg p-6 text-white transform hover:scale-105 transition">
+                <h3 className="text-2xl font-semibold mb-2">{event.title}</h3>
+                <p className="text-lg">{new Date(event.date).toLocaleDateString()}</p>
+                <p className="mt-4">{event.description}</p>
               </div>
             ))
           ) : (
-            <p className="text-gray-700 text-center col-span-full">No hay avisos disponibles.</p>
+            <p className="text-gray-700 col-span-full text-center">No hay eventos programados.</p>
           )}
         </div>
       </div>
@@ -41,4 +43,4 @@ const ViewNotices: React.FC = () => {
   );
 };
 
-export default ViewNotices;
+export default ViewEvents;
