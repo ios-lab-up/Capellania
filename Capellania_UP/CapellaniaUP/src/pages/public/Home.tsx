@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 interface Event {
@@ -11,6 +11,7 @@ interface Event {
 
 const Home: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/events')
@@ -69,6 +70,14 @@ const Home: React.FC = () => {
               Ver Avisos
             </Link>
           </div>
+
+          {/* Botón para que los capellanes inicien sesión */}
+          <button
+            onClick={() => navigate('/login')}
+            className="py-3 px-8 bg-[#2d3748] text-white font-semibold rounded-full shadow-lg hover:bg-[#4a5568] transition text-lg transform hover:-translate-y-1"
+          >
+            Inicia sesión si eres capellán
+          </button>
         </div>
 
         {/* Sección de Eventos Destacados */}

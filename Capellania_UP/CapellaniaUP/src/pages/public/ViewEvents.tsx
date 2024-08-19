@@ -13,13 +13,17 @@ const ViewEvents: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/events')
-      .then(response => {
-        setEvents(response.data);
-      })
-      .catch(error => {
-        console.error("Error al obtener los eventos:", error);
-      });
+    axios.get('http://localhost:5000/api/events', {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(response => {
+      setEvents(response.data);
+    })
+    .catch(error => {
+      console.error("Error al obtener los eventos:", error);
+    });
   }, []);
 
   return (

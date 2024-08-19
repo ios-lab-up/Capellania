@@ -12,13 +12,17 @@ const ViewNotices: React.FC = () => {
   const [notices, setNotices] = useState<Notice[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/notices')
-      .then(response => {
-        setNotices(response.data);
-      })
-      .catch(error => {
-        console.error("Error al obtener los avisos:", error);
-      });
+    axios.get('http://localhost:5000/api/notices', {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(response => {
+      setNotices(response.data);
+    })
+    .catch(error => {
+      console.error("Error al obtener los avisos:", error);
+    });
   }, []);
 
   return (

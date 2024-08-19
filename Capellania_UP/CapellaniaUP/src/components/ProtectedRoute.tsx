@@ -2,14 +2,21 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 interface ProtectedRouteProps {
-  element: React.ComponentType;
+  element: React.ReactElement;
+  roles: string[];
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element: Component }) => {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element, roles }) => {
   const token = localStorage.getItem('token');
-  const user = token ? JSON.parse(atob(token.split('.')[1])) : null;
+  const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : null;
 
-  return token && user?.role === 'capellan' ? <Component /> : <Navigate to="/login" />;
+  if (!token || !decodedToken || !roles.includes(decodedToken.role)) {
+    // Si el usuario no está autenticado o no tiene el rol correcto, redirigir al login
+    return <Navigate to="/login" />;
+  }
+
+  // Si pasa las validaciones, renderizar el elemento
+  return element;
 };
 
 export default ProtectedRoute;

@@ -25,10 +25,10 @@ const App: React.FC = () => {
             <Route path="/masses" element={<ViewMasses />} />
             <Route path="/events" element={<ViewEvents />} />
             <Route path="/notices" element={<ViewNotices />} />
-            <Route path="/dashboard" element={<ProtectedRoute element={DashboardHome} />} />
-            <Route path="/dashboard/add-mass" element={<ProtectedRoute element={AddMass} />} />
-            <Route path="/dashboard/add-event" element={<ProtectedRoute element={AddEvent} />} />
-            <Route path="/dashboard/add-notice" element={<ProtectedRoute element={AddNotice} />} />
+            <Route path="/dashboard" element={<ProtectedRoute element={<DashboardHome />} roles={['capellan']} />} />
+            <Route path="/dashboard/add-mass" element={<ProtectedRoute element={<AddMass />} roles={['capellan']} />} />
+            <Route path="/dashboard/add-event" element={<ProtectedRoute element={<AddEvent />} roles={['capellan']} />} />
+            <Route path="/dashboard/add-notice" element={<ProtectedRoute element={<AddNotice />} roles={['capellan']} />} />
           </Routes>
         </main>
         <Footer />

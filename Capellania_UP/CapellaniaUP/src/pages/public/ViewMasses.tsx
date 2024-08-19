@@ -13,13 +13,17 @@ const ViewMasses: React.FC = () => {
   const [masses, setMasses] = useState<Mass[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/masses')
-      .then(response => {
-        setMasses(response.data);
-      })
-      .catch(error => {
-        console.error("Error al obtener las misas:", error);
-      });
+    axios.get('http://localhost:5000/api/masses', {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(response => {
+      setMasses(response.data);
+    })
+    .catch(error => {
+      console.error("Error al obtener las misas:", error);
+    });
   }, []);
 
   return (
