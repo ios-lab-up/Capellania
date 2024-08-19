@@ -10,16 +10,49 @@ interface Mass {
 
 const ViewMasses: React.FC = () => {
   const [masses, setMasses] = useState<Mass[]>([]);
+  const role = localStorage.getItem('role'); // Obtén el rol del usuario autenticado
+
+  const fetchMasses = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/masses');
+      setMasses(response.data);
+    } catch (error) {
+      console.error('Error al obtener las misas:', error);
+    }
+  };
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/masses')
-      .then(response => {
-        setMasses(response.data);
-      })
-      .catch(error => {
-        console.error("Error al obtener las misas:", error);
-      });
+    fetchMasses();
   }, []);
+
+  const handleDelete = async (id: number) => {
+    const token = localStorage.getItem('token');
+
+    try {
+      await axios.delete(`http://localhost:5000/api/masses/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setMasses(masses.filter(mass => mass.id !== id));
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        if (err.response) {
+          if (err.response.status === 403) {
+            console.error('No tienes permiso para eliminar esta misa.');
+          } else if (err.response.status === 401) {
+            console.error('No estás autenticado.');
+          } else {
+            console.error('Error al eliminar la misa:', err.response.data);
+          }
+        } else {
+          console.error('Error al eliminar la misa:', err.message);
+        }
+      } else {
+        console.error('Unexpected error:', err);
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#F9EFE4] to-[#F0D8BE] flex flex-col items-center justify-center p-8">
@@ -32,6 +65,14 @@ const ViewMasses: React.FC = () => {
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">Fecha: {new Date(mass.date).toLocaleDateString()}</h3>
                 <p className="text-gray-600">Hora: {mass.time}</p>
                 <p className="text-gray-600 mt-4">{mass.description}</p>
+                {role === 'capellan' && (
+                  <button
+                    onClick={() => handleDelete(mass.id)}
+                    className="mt-4 py-2 px-4 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 transition"
+                  >
+                    Eliminar
+                  </button>
+                )}
               </div>
             ))
           ) : (
