@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaChurch, FaCalendarPlus, FaBullhorn } from 'react-icons/fa';
+import { FaChurch, FaCalendarPlus, FaBullhorn, FaEnvelope } from 'react-icons/fa';
 
 const DashboardHome: React.FC = () => {
   const role = localStorage.getItem('role');
@@ -20,22 +20,13 @@ const DashboardHome: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <Link
-            to="/dashboard/add-mass"
-            className="flex items-center justify-center bg-white shadow-lg rounded-lg p-6 transform hover:scale-105 transition"
-          >
-            <span className="mr-2">
-              <FaChurch size={24} />
-            </span>
-            <span className="text-xl font-semibold text-gray-800">Agregar Misa</span>
-          </Link>
-          <Link
             to="/dashboard/add-event"
             className="flex items-center justify-center bg-white shadow-lg rounded-lg p-6 transform hover:scale-105 transition"
           >
             <span className="mr-2">
               <FaCalendarPlus size={24} />
             </span>
-            <span className="text-xl font-semibold text-gray-800">Agregar Evento</span>
+            <span className="text-xl font-semibold text-gray-800">Agregar Misa o Evento</span>
           </Link>
           <Link
             to="/dashboard/add-notice"
@@ -45,6 +36,15 @@ const DashboardHome: React.FC = () => {
               <FaBullhorn size={24} />
             </span>
             <span className="text-xl font-semibold text-gray-800">Agregar Aviso</span>
+          </Link>
+          <Link
+            to="/dashboard/add-newsletter"
+            className="flex items-center justify-center bg-white shadow-lg rounded-lg p-6 transform hover:scale-105 transition"
+          >
+            <span className="mr-2">
+              <FaEnvelope size={24} />
+            </span>
+            <span className="text-xl font-semibold text-gray-800">Agregar Newsletter</span>
           </Link>
         </div>
       </div>

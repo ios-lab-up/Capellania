@@ -7,6 +7,7 @@ import DashboardHome from './pages/dashboard/DashboardHome';
 import AddMass from './pages/dashboard/AddMass';
 import AddEvent from './pages/dashboard/AddEvent';
 import AddNotice from './pages/dashboard/AddNotice';
+import AddNewsletter from './pages/dashboard/AddNewsletter'; // Nuevo componente
 import Home from './pages/public/Home';
 import ViewMasses from './pages/public/ViewMasses';
 import ViewEvents from './pages/public/ViewEvents';
@@ -31,6 +32,7 @@ const App: React.FC = () => {
               <Route path="/dashboard/add-mass" element={<ProtectedRoute roles={['capellan']} element={<AddMass />} />} />
               <Route path="/dashboard/add-event" element={<ProtectedRoute roles={['capellan']} element={<AddEvent />} />} />
               <Route path="/dashboard/add-notice" element={<ProtectedRoute roles={['capellan']} element={<AddNotice />} />} />
+              <Route path="/dashboard/add-newsletter" element={<ProtectedRoute roles={['capellan']} element={<AddNewsletter />} />} />
             </Routes>
           </main>
           <Footer />

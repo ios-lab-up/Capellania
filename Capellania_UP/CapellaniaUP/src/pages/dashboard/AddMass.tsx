@@ -31,6 +31,7 @@ const AddMass: React.FC = () => {
         }
       );
       console.log('Misa creada:', response.data);
+      // Aquí puedes añadir un redirect o resetear el formulario si lo deseas
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response) {
@@ -76,6 +77,7 @@ const AddMass: React.FC = () => {
               onChange={(e) => setDescription(e.target.value)}
               className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#176AE5]"
               rows={4}
+              required
             />
           </div>
           <button
