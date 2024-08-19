@@ -8,15 +8,39 @@ const AddEvent: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    const token = localStorage.getItem('token'); // Obtén el token del localStorage
+
+    if (!token) {
+      console.error('No hay token disponible');
+      return;
+    }
+
     try {
-      const response = await axios.post('http://localhost:5000/api/events', {
-        title,
-        date,
-        description,
-      });
+      const response = await axios.post(
+        'http://localhost:5000/api/events',
+        {
+          title,
+          date,
+          description,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Incluye el token en los encabezados
+          },
+        }
+      );
       console.log('Evento creado:', response.data);
     } catch (error) {
-      console.error('Error al crear el evento:', error);
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          console.error('Error al crear el evento:', error.response.data);
+        } else {
+          console.error('Error al crear el evento:', error.message);
+        }
+      } else {
+        console.error('Error inesperado:', error);
+      }
     }
   };
 

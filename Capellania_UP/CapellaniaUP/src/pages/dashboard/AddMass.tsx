@@ -8,15 +8,39 @@ const AddMass: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    const token = localStorage.getItem('token'); // Obtén el token del localStorage
+
+    if (!token) {
+      console.error('No hay token disponible');
+      return;
+    }
+
     try {
-      const response = await axios.post('http://localhost:5000/api/masses', {
-        date,
-        time,
-        description,
-      });
+      const response = await axios.post(
+        'http://localhost:5000/api/masses',
+        {
+          date,
+          time,
+          description,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Incluye el token en los encabezados
+          },
+        }
+      );
       console.log('Misa creada:', response.data);
     } catch (error) {
-      console.error('Error al crear la misa:', error);
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          console.error('Error al crear la misa:', error.response.data);
+        } else {
+          console.error('Error al crear la misa:', error.message);
+        }
+      } else {
+        console.error('Error inesperado:', error);
+      }
     }
   };
 
