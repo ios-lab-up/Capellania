@@ -11,15 +11,54 @@ interface Event {
 const ViewEvents: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
 
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/events');
+      setEvents(response.data);
+    } catch (error) {
+      console.error('Error al obtener los eventos:', error);
+    }
+  };
+
   useEffect(() => {
-    axios.get('http://localhost:5000/api/events')
-      .then(response => {
-        setEvents(response.data);
-      })
-      .catch(error => {
-        console.error("Error al obtener los eventos:", error);
-      });
+    fetchEvents();
   }, []);
+
+  const handleDelete = async (id: number) => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      console.error('No token found');
+      return;
+    }
+
+    try {
+      await axios.delete(`http://localhost:5000/api/events/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setEvents(events.filter(event => event.id !== id));
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        // Handle errors thrown by axios
+        if (err.response) {
+          if (err.response.status === 403) {
+            console.error('No tienes permiso para eliminar este evento.');
+          } else if (err.response.status === 401) {
+            console.error('No estás autenticado.');
+          } else {
+            console.error('Error al eliminar el evento:', err.response.data);
+          }
+        } else {
+          console.error('Error al eliminar el evento:', err.message);
+        }
+      } else {
+        // Handle other types of errors
+        console.error('Unexpected error:', err);
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#F9EFE4] to-[#F0D8BE] flex flex-col items-center justify-center p-8">
@@ -32,6 +71,12 @@ const ViewEvents: React.FC = () => {
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">{event.title}</h3>
                 <p className="text-gray-600">{new Date(event.date).toLocaleDateString()}</p>
                 <p className="text-gray-600 mt-4">{event.description}</p>
+                <button
+                  onClick={() => handleDelete(event.id)}
+                  className="mt-4 py-2 px-4 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 transition"
+                >
+                  Eliminar
+                </button>
               </div>
             ))
           ) : (

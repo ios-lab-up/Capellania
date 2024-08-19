@@ -131,6 +131,47 @@ app.get('/api/notices', async (req, res) => {
   }
 });
 
+// Rutas protegidas para eliminar datos
+
+// Eliminar una misa
+app.delete('/api/masses/:id', authenticateToken, authorizeCapellan, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await pool.query('DELETE FROM masses WHERE id = $1', [id]);
+    res.status(204).send(); // No Content
+  } catch (error) {
+    console.error('Error al eliminar la misa:', error);
+    res.status(500).json({ error: 'Error al eliminar la misa' });
+  }
+});
+
+// Eliminar un evento
+app.delete('/api/events/:id', authenticateToken, authorizeCapellan, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await pool.query('DELETE FROM events WHERE id = $1', [id]);
+    res.status(204).send(); // No Content
+  } catch (error) {
+    console.error('Error al eliminar el evento:', error);
+    res.status(500).json({ error: 'Error al eliminar el evento' });
+  }
+});
+
+// Eliminar un aviso
+app.delete('/api/notices/:id', authenticateToken, authorizeCapellan, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await pool.query('DELETE FROM notices WHERE id = $1', [id]);
+    res.status(204).send(); // No Content
+  } catch (error) {
+    console.error('Error al eliminar el aviso:', error);
+    res.status(500).json({ error: 'Error al eliminar el aviso' });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
