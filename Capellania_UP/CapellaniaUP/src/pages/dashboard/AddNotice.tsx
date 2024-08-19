@@ -7,14 +7,38 @@ const AddNotice: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    const token = localStorage.getItem('token'); // Obtén el token del localStorage
+
+    if (!token) {
+      console.error('No hay token disponible');
+      return;
+    }
+
     try {
-      const response = await axios.post('http://localhost:5000/api/notices', {
-        title,
-        content,
-      });
+      const response = await axios.post(
+        'http://localhost:5000/api/notices',
+        {
+          title,
+          content,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Incluye el token en los encabezados
+          },
+        }
+      );
       console.log('Aviso creado:', response.data);
     } catch (error) {
-      console.error('Error al crear el aviso:', error);
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          console.error('Error al crear el aviso:', error.response.data);
+        } else {
+          console.error('Error al crear el aviso:', error.message);
+        }
+      } else {
+        console.error('Error inesperado:', error);
+      }
     }
   };
 
