@@ -12,28 +12,31 @@ import ViewMasses from './pages/public/ViewMasses';
 import ViewEvents from './pages/public/ViewEvents';
 import ViewNotices from './pages/public/ViewNotices';
 import Login from './pages/public/Login';
+import { UserProvider } from './context/UserContext';
 
 const App: React.FC = () => {
   return (
-    <Router>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/masses" element={<ViewMasses />} />
-            <Route path="/events" element={<ViewEvents />} />
-            <Route path="/notices" element={<ViewNotices />} />
-            <Route path="/dashboard" element={<ProtectedRoute element={<DashboardHome />} roles={['capellan']} />} />
-            <Route path="/dashboard/add-mass" element={<ProtectedRoute element={<AddMass />} roles={['capellan']} />} />
-            <Route path="/dashboard/add-event" element={<ProtectedRoute element={<AddEvent />} roles={['capellan']} />} />
-            <Route path="/dashboard/add-notice" element={<ProtectedRoute element={<AddNotice />} roles={['capellan']} />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <UserProvider>
+      <Router>
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <main className="flex-grow">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/masses" element={<ViewMasses />} />
+              <Route path="/events" element={<ViewEvents />} />
+              <Route path="/notices" element={<ViewNotices />} />
+              <Route path="/dashboard" element={<ProtectedRoute roles={['capellan']} element={<DashboardHome />} />} />
+              <Route path="/dashboard/add-mass" element={<ProtectedRoute roles={['capellan']} element={<AddMass />} />} />
+              <Route path="/dashboard/add-event" element={<ProtectedRoute roles={['capellan']} element={<AddEvent />} />} />
+              <Route path="/dashboard/add-notice" element={<ProtectedRoute roles={['capellan']} element={<AddNotice />} />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </UserProvider>
   );
 };
 
