@@ -147,17 +147,6 @@ app.get('/api/notices', async (req, res) => {
   }
 });
 
-// Obtener todos los newsletters
-app.get('/api/newsletters', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM newsletters');
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Error al obtener los newsletters:', error);
-    res.status(500).json({ error: 'Error al obtener los newsletters' });
-  }
-});
-
 // Rutas protegidas para eliminar datos
 
 // Eliminar una misa
@@ -212,7 +201,7 @@ app.delete('/api/newsletters/:id', authenticateToken, authorizeCapellan, async (
   }
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });

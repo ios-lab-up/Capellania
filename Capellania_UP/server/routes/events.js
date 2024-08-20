@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', authenticateToken, authorizeAdmin, async (req, res) => {
   const { title, date, description } = req.body;
-  const newEvent = await Event.create({ title, date, description });
+  const newEvent = await Event.create({ title, date, description, type });
   res.json(newEvent);
 });
 
