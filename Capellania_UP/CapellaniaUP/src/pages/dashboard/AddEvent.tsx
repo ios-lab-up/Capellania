@@ -11,7 +11,7 @@ const AddEvent: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    const token = localStorage.getItem('token'); // Obtén el token del localStorage
+    const token = localStorage.getItem('token');
 
     if (!token) {
       console.error('No hay token disponible');
@@ -19,21 +19,20 @@ const AddEvent: React.FC = () => {
     }
 
     const payload = {
-      title: eventType === 'evento' ? title : '', // Solo título si es un evento
+      title: eventType === 'evento' ? title : '',
       date,
-      time: eventType === 'misa' ? time : '', // Solo tiempo si es una misa
+      time: eventType === 'misa' ? time : '',
       description,
-      type: eventType // Asegurando que el tipo de evento se envíe
+      type: eventType, // Asegurando que el tipo de evento se envíe
     };
 
     try {
-      const endpoint = eventType === 'misa' ? '/api/masses' : '/api/events';
       const response = await axios.post(
-        `http://localhost:5000${endpoint}`,
+        'http://localhost:5000/api/events',
         payload,
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Incluye el token en los encabezados
+            Authorization: `Bearer ${token}`,
           },
         }
       );
