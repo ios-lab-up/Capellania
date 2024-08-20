@@ -23,6 +23,7 @@ const AddEvent: React.FC = () => {
       date,
       time: eventType === 'misa' ? time : '', // Solo tiempo si es una misa
       description,
+      type: eventType // Asegurando que el tipo de evento se envíe
     };
 
     try {

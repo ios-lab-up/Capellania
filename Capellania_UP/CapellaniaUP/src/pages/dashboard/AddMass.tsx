@@ -5,6 +5,7 @@ const AddMass: React.FC = () => {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [description, setDescription] = useState('');
+  const [massType, setMassType] = useState('ordinaria'); // Valor por defecto
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,6 +24,7 @@ const AddMass: React.FC = () => {
           date,
           time,
           description,
+          type: massType, // Añade el tipo de misa al payload
         },
         {
           headers: {
@@ -50,6 +52,19 @@ const AddMass: React.FC = () => {
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Agregar Misa</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block text-lg font-medium text-gray-700">Tipo de Misa</label>
+            <select
+              value={massType}
+              onChange={(e) => setMassType(e.target.value)}
+              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#176AE5]"
+            >
+              <option value="ordinaria">Ordinaria</option>
+              <option value="funeral">Funeral</option>
+              <option value="matrimonio">Matrimonio</option>
+              <option value="especial">Especial</option>
+            </select>
+          </div>
           <div>
             <label className="block text-lg font-medium text-gray-700">Fecha</label>
             <input
