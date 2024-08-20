@@ -48,14 +48,14 @@ app.post('/api/login', async (req, res) => {
 
 // Rutas protegidas para capellanes
 
-// Crear una nueva misa
+// Crear una nueva misa con tipo
 app.post('/api/masses', authenticateToken, authorizeCapellan, async (req, res) => {
-  const { date, time, description } = req.body;
+  const { date, time, description, type } = req.body;
 
   try {
     const result = await pool.query(
-      'INSERT INTO masses (date, time, description) VALUES ($1, $2, $3) RETURNING *',
-      [date, time, description]
+      'INSERT INTO masses (date, time, description, type) VALUES ($1, $2, $3, $4) RETURNING *',
+      [date, time, description, type]
     );
     res.json(result.rows[0]);
   } catch (error) {
@@ -64,14 +64,14 @@ app.post('/api/masses', authenticateToken, authorizeCapellan, async (req, res) =
   }
 });
 
-// Crear un nuevo evento
+// Crear un nuevo evento con tipo
 app.post('/api/events', authenticateToken, authorizeCapellan, async (req, res) => {
-  const { title, date, description } = req.body;
+  const { title, date, description, type } = req.body;
 
   try {
     const result = await pool.query(
-      'INSERT INTO events (title, date, description) VALUES ($1, $2, $3) RETURNING *',
-      [title, date, description]
+      'INSERT INTO events (title, date, description, type) VALUES ($1, $2, $3, $4) RETURNING *',
+      [title, date, description, type]
     );
     res.json(result.rows[0]);
   } catch (error) {
@@ -93,6 +93,22 @@ app.post('/api/notices', authenticateToken, authorizeCapellan, async (req, res) 
   } catch (error) {
     console.error('Error al crear el aviso:', error);
     res.status(500).json({ error: `Error al crear el aviso: ${error.message}` });
+  }
+});
+
+// Crear un nuevo newsletter con imagen
+app.post('/api/newsletters', authenticateToken, authorizeCapellan, async (req, res) => {
+  const { title, imageUrl, content } = req.body;
+
+  try {
+    const result = await pool.query(
+      'INSERT INTO newsletters (title, image_url, content) VALUES ($1, $2, $3) RETURNING *',
+      [title, imageUrl, content]
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error al crear el newsletter:', error);
+    res.status(500).json({ error: `Error al crear el newsletter: ${error.message}` });
   }
 });
 
@@ -169,6 +185,19 @@ app.delete('/api/notices/:id', authenticateToken, authorizeCapellan, async (req,
   } catch (error) {
     console.error('Error al eliminar el aviso:', error);
     res.status(500).json({ error: 'Error al eliminar el aviso' });
+  }
+});
+
+// Eliminar un newsletter
+app.delete('/api/newsletters/:id', authenticateToken, authorizeCapellan, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await pool.query('DELETE FROM newsletters WHERE id = $1', [id]);
+    res.status(204).send(); // No Content
+  } catch (error) {
+    console.error('Error al eliminar el newsletter:', error);
+    res.status(500).json({ error: 'Error al eliminar el newsletter' });
   }
 });
 
