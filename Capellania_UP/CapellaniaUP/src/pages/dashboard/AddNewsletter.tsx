@@ -1,38 +1,46 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 const AddNewsletter: React.FC = () => {
-  const [title, setTitle] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [content, setContent] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const token = localStorage.getItem('token'); // Obtener el token del localStorage
+    const token = localStorage.getItem("token"); // Obtener el token del localStorage
 
     try {
-      const response = await axios.post('http://localhost:5000/api/newsletters', {
-        title,
-        imageUrl,
-        content,
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`, // Incluir el token en la solicitud
+      const response = await axios.post(
+        "http://servercap.ioslab.dev/api/newsletters",
+        {
+          title,
+          imageUrl,
+          content,
         },
-      });
-      console.log('Newsletter creado:', response.data);
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Incluir el token en la solicitud
+          },
+        }
+      );
+      console.log("Newsletter creado:", response.data);
     } catch (error) {
-      console.error('Error al crear el newsletter:', error);
+      console.error("Error al crear el newsletter:", error);
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Agregar Newsletter</h1>
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
+          Agregar Newsletter
+        </h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-lg font-medium text-gray-700">Título</label>
+            <label className="block text-lg font-medium text-gray-700">
+              Título
+            </label>
             <input
               type="text"
               value={title}
@@ -42,7 +50,9 @@ const AddNewsletter: React.FC = () => {
             />
           </div>
           <div>
-            <label className="block text-lg font-medium text-gray-700">URL de la Imagen</label>
+            <label className="block text-lg font-medium text-gray-700">
+              URL de la Imagen
+            </label>
             <input
               type="text"
               value={imageUrl}
@@ -52,7 +62,9 @@ const AddNewsletter: React.FC = () => {
             />
           </div>
           <div>
-            <label className="block text-lg font-medium text-gray-700">Contenido</label>
+            <label className="block text-lg font-medium text-gray-700">
+              Contenido
+            </label>
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}

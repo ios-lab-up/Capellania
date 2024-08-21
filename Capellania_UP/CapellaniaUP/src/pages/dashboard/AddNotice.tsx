@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 const AddNotice: React.FC = () => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    const token = localStorage.getItem('token'); // Obtén el token del localStorage
+
+    const token = localStorage.getItem("token"); // Obtén el token del localStorage
 
     if (!token) {
-      console.error('No hay token disponible');
+      console.error("No hay token disponible");
       return;
     }
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/notices',
+        "http://servercap.ioslab.dev/api/notices",
         {
           title,
           content,
@@ -28,16 +28,16 @@ const AddNotice: React.FC = () => {
           },
         }
       );
-      console.log('Aviso creado:', response.data);
+      console.log("Aviso creado:", response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response) {
-          console.error('Error al crear el aviso:', error.response.data);
+          console.error("Error al crear el aviso:", error.response.data);
         } else {
-          console.error('Error al crear el aviso:', error.message);
+          console.error("Error al crear el aviso:", error.message);
         }
       } else {
-        console.error('Error inesperado:', error);
+        console.error("Error inesperado:", error);
       }
     }
   };
@@ -45,10 +45,14 @@ const AddNotice: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Agregar Aviso</h1>
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
+          Agregar Aviso
+        </h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-lg font-medium text-gray-700">Título</label>
+            <label className="block text-lg font-medium text-gray-700">
+              Título
+            </label>
             <input
               type="text"
               value={title}
@@ -58,7 +62,9 @@ const AddNotice: React.FC = () => {
             />
           </div>
           <div>
-            <label className="block text-lg font-medium text-gray-700">Contenido</label>
+            <label className="block text-lg font-medium text-gray-700">
+              Contenido
+            </label>
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}

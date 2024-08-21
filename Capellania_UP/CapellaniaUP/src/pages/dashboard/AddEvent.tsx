@@ -1,34 +1,34 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 const AddEvent: React.FC = () => {
-  const [eventType, setEventType] = useState('evento'); // Valor por defecto
-  const [title, setTitle] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
-  const [description, setDescription] = useState('');
+  const [eventType, setEventType] = useState("evento"); // Valor por defecto
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    const token = localStorage.getItem('token');
+
+    const token = localStorage.getItem("token");
 
     if (!token) {
-      console.error('No hay token disponible');
+      console.error("No hay token disponible");
       return;
     }
 
     const payload = {
-      title: eventType === 'evento' ? title : '',
+      title: eventType === "evento" ? title : "",
       date,
-      time: eventType === 'misa' ? time : '',
+      time: eventType === "misa" ? time : "",
       description,
       type: eventType, // Asegurando que el tipo de evento se envíe
     };
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/events',
+        "http://servercap.ioslab.dev/api/events",
         payload,
         {
           headers: {
@@ -36,7 +36,10 @@ const AddEvent: React.FC = () => {
           },
         }
       );
-      console.log(`${eventType.charAt(0).toUpperCase() + eventType.slice(1)} creado:`, response.data);
+      console.log(
+        `${eventType.charAt(0).toUpperCase() + eventType.slice(1)} creado:`,
+        response.data
+      );
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response) {
@@ -45,7 +48,7 @@ const AddEvent: React.FC = () => {
           console.error(`Error al crear el ${eventType}:`, error.message);
         }
       } else {
-        console.error('Error inesperado:', error);
+        console.error("Error inesperado:", error);
       }
     }
   };
@@ -54,11 +57,13 @@ const AddEvent: React.FC = () => {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
-          Agregar {eventType === 'misa' ? 'Misa' : 'Evento'}
+          Agregar {eventType === "misa" ? "Misa" : "Evento"}
         </h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-lg font-medium text-gray-700">Tipo de Evento</label>
+            <label className="block text-lg font-medium text-gray-700">
+              Tipo de Evento
+            </label>
             <select
               value={eventType}
               onChange={(e) => setEventType(e.target.value)}
@@ -68,9 +73,11 @@ const AddEvent: React.FC = () => {
               <option value="misa">Misa</option>
             </select>
           </div>
-          {eventType === 'evento' && (
+          {eventType === "evento" && (
             <div>
-              <label className="block text-lg font-medium text-gray-700">Título</label>
+              <label className="block text-lg font-medium text-gray-700">
+                Título
+              </label>
               <input
                 type="text"
                 value={title}
@@ -81,7 +88,9 @@ const AddEvent: React.FC = () => {
             </div>
           )}
           <div>
-            <label className="block text-lg font-medium text-gray-700">Fecha</label>
+            <label className="block text-lg font-medium text-gray-700">
+              Fecha
+            </label>
             <input
               type="date"
               value={date}
@@ -90,9 +99,11 @@ const AddEvent: React.FC = () => {
               required
             />
           </div>
-          {eventType === 'misa' && (
+          {eventType === "misa" && (
             <div>
-              <label className="block text-lg font-medium text-gray-700">Hora</label>
+              <label className="block text-lg font-medium text-gray-700">
+                Hora
+              </label>
               <input
                 type="time"
                 value={time}
@@ -103,7 +114,9 @@ const AddEvent: React.FC = () => {
             </div>
           )}
           <div>
-            <label className="block text-lg font-medium text-gray-700">Descripción</label>
+            <label className="block text-lg font-medium text-gray-700">
+              Descripción
+            </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -116,7 +129,7 @@ const AddEvent: React.FC = () => {
             type="submit"
             className="w-full py-3 bg-[#176AE5] text-white font-semibold rounded-lg hover:bg-[#0F5ACC] transition"
           >
-            Agregar {eventType === 'misa' ? 'Misa' : 'Evento'}
+            Agregar {eventType === "misa" ? "Misa" : "Evento"}
           </button>
         </form>
       </div>
