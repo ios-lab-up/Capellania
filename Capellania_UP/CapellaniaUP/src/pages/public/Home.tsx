@@ -15,7 +15,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get("http://servercap.ioslab.dev/api/events")
+      .get("https://servercap.ioslab.dev/api/events")
       .then((response) => {
         const upcomingEvents = response.data.filter(
           (event: Event) => new Date(event.date) >= new Date()

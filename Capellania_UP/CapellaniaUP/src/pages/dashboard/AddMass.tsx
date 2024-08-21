@@ -19,7 +19,7 @@ const AddMass: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://servercap.ioslab.dev/api/events",
+        "https://servercap.ioslab.dev/api/events",
         {
           date,
           time,

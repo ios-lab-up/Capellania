@@ -14,7 +14,7 @@ const ViewEvents: React.FC = () => {
   const fetchEvents = async () => {
     try {
       const response = await axios.get(
-        "http://servercap.ioslab.dev/api/events"
+        "https://servercap.ioslab.dev/api/events"
       );
       setEvents(response.data);
     } catch (error) {
@@ -35,7 +35,7 @@ const ViewEvents: React.FC = () => {
     }
 
     try {
-      await axios.delete(`http://servercap.ioslab.dev/api/events/${id}`, {
+      await axios.delete(`https://servercap.ioslab.dev/api/events/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Asegúrate de incluir el token aquí
         },

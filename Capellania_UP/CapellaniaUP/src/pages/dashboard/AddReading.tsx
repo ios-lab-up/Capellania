@@ -11,7 +11,7 @@ const AddReadings: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://servercap.ioslab.dev/api/newsletters",
+        "https://servercap.ioslab.dev/api/newsletters",
         {
           title,
           content,

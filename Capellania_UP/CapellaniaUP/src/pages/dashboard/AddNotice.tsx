@@ -17,7 +17,7 @@ const AddNotice: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://servercap.ioslab.dev/api/notices",
+        "https://servercap.ioslab.dev/api/notices",
         {
           title,
           content,
