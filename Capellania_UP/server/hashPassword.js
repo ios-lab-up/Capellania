@@ -9,7 +9,7 @@ async function hashPassword() {
   try {
     const result = await pool.query(
       'UPDATE users SET password = $1 WHERE email = $2',
-      [hashedPassword, email]
+      [plainTextPassword, email]
     );
     console.log('Contraseña cifrada y actualizada correctamente para el usuario:', email);
   } catch (error) {
