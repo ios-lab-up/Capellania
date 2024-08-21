@@ -2,11 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const pool = require('./config/database');  // Configuración de la base de datos
+const { PrismaClient } = require('@prisma/client');
 const { authenticateToken, authorizeCapellan } = require('./middleware/auth');
 require('dotenv').config();
 
 const app = express();
+const prisma = new PrismaClient();
 
 app.use(cors());
 app.use(express.json());
@@ -23,12 +24,14 @@ app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-    if (result.rows.length === 0) {
+    const user = await prisma.users.findUnique({
+      where: { email },
+    });
+    
+    if (!user) {
       return res.status(400).json({ error: 'Usuario no encontrado' });
     }
 
-    const user = result.rows[0];
     const validPassword = bcrypt.compareSync(password, user.password);
     if (!validPassword) {
       return res.status(400).json({ error: 'Contraseña incorrecta' });
@@ -53,11 +56,10 @@ app.post('/api/masses', authenticateToken, authorizeCapellan, async (req, res) =
   const { date, time, description, type } = req.body;
 
   try {
-    const result = await pool.query(
-      'INSERT INTO masses (date, time, description, type) VALUES ($1, $2, $3, $4) RETURNING *',
-      [date, time, description, type]
-    );
-    res.json(result.rows[0]);
+    const newMass = await prisma.masses.create({
+      data: { date, time, description, type }
+    });
+    res.json(newMass);
   } catch (error) {
     console.error('Error al crear la misa:', error);
     res.status(500).json({ error: `Error al crear la misa: ${error.message}` });
@@ -69,11 +71,10 @@ app.post('/api/events', authenticateToken, authorizeCapellan, async (req, res) =
   const { title, date, description, type } = req.body;
 
   try {
-    const result = await pool.query(
-      'INSERT INTO events (title, date, description, type) VALUES ($1, $2, $3, $4) RETURNING *',
-      [title, date, description, type]
-    );
-    res.json(result.rows[0]);
+    const newEvent = await prisma.events.create({
+      data: { title, date, description, type }
+    });
+    res.json(newEvent);
   } catch (error) {
     console.error('Error al crear el evento:', error);
     res.status(500).json({ error: `Error al crear el evento: ${error.message}` });
@@ -85,11 +86,10 @@ app.post('/api/notices', authenticateToken, authorizeCapellan, async (req, res) 
   const { title, content } = req.body;
 
   try {
-    const result = await pool.query(
-      'INSERT INTO notices (title, content) VALUES ($1, $2) RETURNING *',
-      [title, content]
-    );
-    res.json(result.rows[0]);
+    const newNotice = await prisma.notices.create({
+      data: { title, content }
+    });
+    res.json(newNotice);
   } catch (error) {
     console.error('Error al crear el aviso:', error);
     res.status(500).json({ error: `Error al crear el aviso: ${error.message}` });
@@ -101,11 +101,10 @@ app.post('/api/newsletters', authenticateToken, authorizeCapellan, async (req, r
   const { title, imageUrl, content } = req.body;
 
   try {
-    const result = await pool.query(
-      'INSERT INTO newsletters (title, image_url, content) VALUES ($1, $2, $3) RETURNING *',
-      [title, imageUrl, content]
-    );
-    res.json(result.rows[0]);
+    const newNewsletter = await prisma.newsletters.create({
+      data: { title, imageUrl, content }
+    });
+    res.json(newNewsletter);
   } catch (error) {
     console.error('Error al crear el newsletter:', error);
     res.status(500).json({ error: `Error al crear el newsletter: ${error.message}` });
@@ -117,8 +116,8 @@ app.post('/api/newsletters', authenticateToken, authorizeCapellan, async (req, r
 // Obtener todas las misas
 app.get('/api/masses', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM masses');
-    res.json(result.rows);
+    const masses = await prisma.masses.findMany();
+    res.json(masses);
   } catch (error) {
     console.error('Error al obtener las misas:', error);
     res.status(500).json({ error: 'Error al obtener las misas' });
@@ -128,8 +127,8 @@ app.get('/api/masses', async (req, res) => {
 // Obtener todos los eventos
 app.get('/api/events', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM events');
-    res.json(result.rows);
+    const events = await prisma.events.findMany();
+    res.json(events);
   } catch (error) {
     console.error('Error al obtener los eventos:', error);
     res.status(500).json({ error: 'Error al obtener los eventos' });
@@ -139,14 +138,28 @@ app.get('/api/events', async (req, res) => {
 // Obtener todos los avisos
 app.get('/api/notices', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM notices');
-    res.json(result.rows);
+    const notices = await prisma.notices.findMany();
+    res.json(notices);
   } catch (error) {
     console.error('Error al obtener los avisos:', error);
     res.status(500).json({ error: 'Error al obtener los avisos' });
   }
 });
 
+<<<<<<< HEAD
+=======
+// Obtener todos los newsletters
+app.get('/api/newsletters', async (req, res) => {
+  try {
+    const newsletters = await prisma.newsletters.findMany();
+    res.json(newsletters);
+  } catch (error) {
+    console.error('Error al obtener los newsletters:', error);
+    res.status(500).json({ error: 'Error al obtener los newsletters' });
+  }
+});
+
+>>>>>>> fae2afd (feat: se ñaadio prisma)
 // Rutas protegidas para eliminar datos
 
 // Eliminar una misa
@@ -154,7 +167,9 @@ app.delete('/api/masses/:id', authenticateToken, authorizeCapellan, async (req, 
   const { id } = req.params;
 
   try {
-    await pool.query('DELETE FROM masses WHERE id = $1', [id]);
+    await prisma.masses.delete({
+      where: { id: parseInt(id) }
+    });
     res.status(204).send(); // No Content
   } catch (error) {
     console.error('Error al eliminar la misa:', error);
@@ -167,7 +182,9 @@ app.delete('/api/events/:id', authenticateToken, authorizeCapellan, async (req, 
   const { id } = req.params;
 
   try {
-    await pool.query('DELETE FROM events WHERE id = $1', [id]);
+    await prisma.events.delete({
+      where: { id: parseInt(id) }
+    });
     res.status(204).send(); // No Content
   } catch (error) {
     console.error('Error al eliminar el evento:', error);
@@ -180,7 +197,9 @@ app.delete('/api/notices/:id', authenticateToken, authorizeCapellan, async (req,
   const { id } = req.params;
 
   try {
-    await pool.query('DELETE FROM notices WHERE id = $1', [id]);
+    await prisma.notices.delete({
+      where: { id: parseInt(id) }
+    });
     res.status(204).send(); // No Content
   } catch (error) {
     console.error('Error al eliminar el aviso:', error);
@@ -193,7 +212,9 @@ app.delete('/api/newsletters/:id', authenticateToken, authorizeCapellan, async (
   const { id } = req.params;
 
   try {
-    await pool.query('DELETE FROM newsletters WHERE id = $1', [id]);
+    await prisma.newsletters.delete({
+      where: { id: parseInt(id) }
+    });
     res.status(204).send(); // No Content
   } catch (error) {
     console.error('Error al eliminar el newsletter:', error);
