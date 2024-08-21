@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  capellania-db:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_DB: capellania
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+    ports:
+      - "5432:5432"
+    networks:
+      - capellania-network
+
+  capellania-api:
+    build: .
+    depends_on:
+      - capellania-db
+    environment:
+      MIX_ENV: dev
+      DB_HOST: capellania-db # Use the service name of the DB container
+      DB_NAME: capellania
+      DB_USER: postgres
+      DB_PASS: 12345
+    ports:
+      - "3000:3000"
+    networks:
+      - capellania-network
+
+  adminer:
+    image: adminer
+    depends_on:
+      - capellania-db
+    ports:
+      - "8080:8080"
+    networks:
+      - capellania-network
+
+volumes:
+  postgres_data:
+
+networks:
+  capellania-network:
