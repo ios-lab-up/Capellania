@@ -146,20 +146,6 @@ app.get('/api/notices', async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
-// Obtener todos los newsletters
-app.get('/api/newsletters', async (req, res) => {
-  try {
-    const newsletters = await prisma.newsletters.findMany();
-    res.json(newsletters);
-  } catch (error) {
-    console.error('Error al obtener los newsletters:', error);
-    res.status(500).json({ error: 'Error al obtener los newsletters' });
-  }
-});
-
->>>>>>> fae2afd (feat: se ñaadio prisma)
 // Rutas protegidas para eliminar datos
 
 // Eliminar una misa
