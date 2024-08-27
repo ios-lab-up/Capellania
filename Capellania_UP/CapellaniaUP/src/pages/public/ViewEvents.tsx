@@ -14,7 +14,7 @@ const ViewEvents: React.FC = () => {
   const fetchEvents = async () => {
     try {
       const response = await axios.get(
-        "https://servercap.ioslab.dev/api/events"
+        "http://localhost:3000/api/events"
       );
       setEvents(response.data);
     } catch (error) {

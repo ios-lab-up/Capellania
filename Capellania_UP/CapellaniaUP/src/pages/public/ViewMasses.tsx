@@ -15,7 +15,7 @@ const ViewMasses: React.FC = () => {
   const fetchMasses = async () => {
     try {
       const response = await axios.get(
-        "https://servercap.ioslab.dev/api/masses"
+        "https://localhost:3000/api/masses"
       );
       setMasses(response.data);
     } catch (error) {

@@ -11,7 +11,7 @@ const AddReadings: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "https://servercap.ioslab.dev/api/newsletters",
+        "http://localhost:3000/api/readings",
         {
           title,
           content,
@@ -22,9 +22,9 @@ const AddReadings: React.FC = () => {
           },
         }
       );
-      console.log("Newsletter creado:", response.data);
+      console.log("Lectura creada:", response.data);
     } catch (error) {
-      console.error("Error al crear el newsletter:", error);
+      console.error("Error al crear la lectura", error);
     }
   };
 

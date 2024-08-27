@@ -107,7 +107,21 @@ app.post('/api/newsletters', authenticateToken, authorizeCapellan, async (req, r
     res.json(newNewsletter);
   } catch (error) {
     console.error('Error al crear el newsletter:', error);
-    res.status(500).json({ error: `Error al crear el newsletter: ${error.message}` });
+    res.status(100).json({ error: `Error al crear el newsletter: ${error.message}` });
+  }
+});
+
+app.post('/api/readings', authenticateToken, authorizeCapellan, async (req, res) => {
+  const { title, content } = req.body;
+
+  try {
+    const newReading = await prisma.readings.create({
+      data: { title, content }
+    });
+    res.json(newReading);
+  } catch (error) {
+    console.error('Error al crear la lectura:', error);
+    res.status(500).json({ error: `Error al crear la lectura: ${error.message}` });
   }
 });
 

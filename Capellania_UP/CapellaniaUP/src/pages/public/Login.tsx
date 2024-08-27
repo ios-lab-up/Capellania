@@ -12,7 +12,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://servercap.ioslab.dev/api/login",
+        "http://localhost:3000/api/login",
         {
           email,
           password,

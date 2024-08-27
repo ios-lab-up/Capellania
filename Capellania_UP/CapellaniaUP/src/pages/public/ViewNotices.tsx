@@ -14,7 +14,7 @@ const ViewNotices: React.FC = () => {
   const fetchNotices = async () => {
     try {
       const response = await axios.get(
-        "https://servercap.ioslab.dev/api/notices"
+        "https://localhost:3000/api/notices"
       );
       setNotices(response.data);
     } catch (error) {
