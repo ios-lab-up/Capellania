@@ -25,7 +25,7 @@ app.post('/api/login', async (req, res) => {
 
   try {
     const user = await prisma.users.findUnique({
-      where: { email },
+      where: { email},
     });
     
     if (!user) {
@@ -108,6 +108,20 @@ app.post('/api/newsletters', authenticateToken, authorizeCapellan, async (req, r
   } catch (error) {
     console.error('Error al crear el newsletter:', error);
     res.status(500).json({ error: `Error al crear el newsletter: ${error.message}` });
+  }
+});
+
+app.post('/api/readings', authenticateToken, authorizeCapellan, async (req, res) => {
+  const { title, content } = req.body;
+
+  try {
+    const newReading = await prisma.newsletters.create({
+      data: { title, content }
+    });
+    res.json(newReading);
+  } catch (error) {
+    console.error('Error al crear la lectura:', error);
+    res.status(500).json({ error: `Error al crear la lectura: ${error.message}` });
   }
 });
 
@@ -208,7 +222,7 @@ app.delete('/api/newsletters/:id', authenticateToken, authorizeCapellan, async (
   }
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4100;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });

@@ -28,7 +28,7 @@ const AddEvent: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "https://servercap.ioslab.dev/api/events",
+        "http://localhost:4100/api/events",
         payload,
         {
           headers: {

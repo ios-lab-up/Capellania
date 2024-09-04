@@ -14,7 +14,7 @@ const ViewNotices: React.FC = () => {
   const fetchNotices = async () => {
     try {
       const response = await axios.get(
-        "https://servercap.ioslab.dev/api/notices"
+        "http://localhost:4000/api/notices"
       );
       setNotices(response.data);
     } catch (error) {
@@ -30,7 +30,7 @@ const ViewNotices: React.FC = () => {
     const token = localStorage.getItem("token"); // Obtén el token del localStorage
 
     try {
-      await axios.delete(`https://servercap.ioslab.dev/api/notices/${id}`, {
+      await axios.delete(`http://localhost:4000/api/notices/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Asegúrate de incluir el token aquí
         },

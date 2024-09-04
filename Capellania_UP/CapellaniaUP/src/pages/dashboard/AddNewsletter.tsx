@@ -12,7 +12,7 @@ const AddNewsletter: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "https://servercap.ioslab.dev/api/newsletters",
+        "http://localhost:4100/api/newsletters",
         {
           title,
           imageUrl,

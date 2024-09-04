@@ -14,6 +14,7 @@ import ViewEvents from './pages/public/ViewEvents';
 import ViewNotices from './pages/public/ViewNotices';
 import Login from './pages/public/Login';
 import { UserProvider } from './context/UserContext';
+import AddReadings from './pages/dashboard/AddReading';
 
 const App: React.FC = () => {
   return (
@@ -33,6 +34,7 @@ const App: React.FC = () => {
               <Route path="/dashboard/add-event" element={<ProtectedRoute roles={['capellan']} element={<AddEvent />} />} />
               <Route path="/dashboard/add-notice" element={<ProtectedRoute roles={['capellan']} element={<AddNotice />} />} />
               <Route path="/dashboard/add-newsletter" element={<ProtectedRoute roles={['capellan']} element={<AddNewsletter />} />} />
+              <Route path="/dashboard/add-readings" element={<ProtectedRoute roles={['capellan']} element={<AddReadings />} />} />
             </Routes>
           </main>
           <Footer />

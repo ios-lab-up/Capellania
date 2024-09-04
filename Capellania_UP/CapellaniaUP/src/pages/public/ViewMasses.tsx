@@ -15,7 +15,7 @@ const ViewMasses: React.FC = () => {
   const fetchMasses = async () => {
     try {
       const response = await axios.get(
-        "https://servercap.ioslab.dev/api/masses"
+        "http://localhost:4000/api/masses"
       );
       setMasses(response.data);
     } catch (error) {
@@ -31,7 +31,7 @@ const ViewMasses: React.FC = () => {
     const token = localStorage.getItem("token");
 
     try {
-      await axios.delete(`https://servercap.ioslab.dev/api/masses/${id}`, {
+      await axios.delete(`http://localhost:4000/api/masses/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

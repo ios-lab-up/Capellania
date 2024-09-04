@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const AddReadings: React.FC = () => {
+const AddReading: React.FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const token = localStorage.getItem("token"); // Obtener el token del localStorage
+    
+    if (!token) {
+      console.error("No hay token disponible");
+      return;
+    }
 
     try {
       const response = await axios.post(
-        "https://servercap.ioslab.dev/api/newsletters",
+        "http://localhost:4100/api/readings",
         {
           title,
           content,
@@ -22,9 +27,17 @@ const AddReadings: React.FC = () => {
           },
         }
       );
-      console.log("Newsletter creado:", response.data);
-    } catch (error) {
-      console.error("Error al crear el newsletter:", error);
+      console.log("Lectura creada:", response.data);
+     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          console.error("Error al crear la lectura:", error.response.data);
+        } else {
+          console.error("Error al crear la lectura:", error.message);
+        }
+      } else {
+        console.error("Error inesperado:", error);
+      }
     }
   };
 
@@ -69,6 +82,6 @@ const AddReadings: React.FC = () => {
       </div>
     </div>
   );
-};
+}; 
 
-export default AddReadings;
+export default AddReading;

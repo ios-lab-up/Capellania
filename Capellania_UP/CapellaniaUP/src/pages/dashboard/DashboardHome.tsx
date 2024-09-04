@@ -47,7 +47,7 @@ const DashboardHome: React.FC = () => {
             <span className="text-xl font-semibold text-gray-800">Agregar Newsletter</span>
           </Link>
           <Link
-            to="/dashboard/add-newsletter"
+            to="/dashboard/add-readings"
             className="flex items-center justify-center bg-white shadow-lg rounded-lg p-6 transform hover:scale-105 transition"
           >
             <span className="mr-2">
