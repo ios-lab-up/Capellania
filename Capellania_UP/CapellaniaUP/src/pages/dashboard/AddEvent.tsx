@@ -18,13 +18,22 @@ const AddEvent: React.FC = () => {
       return;
     }
 
+    let formattedDateTime;
+
+    // Combinar fecha y hora para eventos tipo misa
+    if (eventType === "misa") {
+      formattedDateTime = new Date(`${date}T${time}:00.000Z`).toISOString();
+    } else {
+      formattedDateTime = new Date(date).toISOString(); // Solo la fecha para eventos generales
+    }
+
     const payload = {
-      title: eventType === "evento" ? title : "",
-      date,
-      time: eventType === "misa" ? time : "",
+      title: eventType === "evento" ? title : "Misa", // Asegúrate de tener un título por defecto
+      date: formattedDateTime,
       description,
-      type: eventType, // Asegurando que el tipo de evento se envíe
+      type: eventType,
     };
+  
 
     try {
       const response = await axios.post(

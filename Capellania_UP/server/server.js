@@ -107,7 +107,21 @@ app.post('/api/newsletters', authenticateToken, authorizeCapellan, async (req, r
     res.json(newNewsletter);
   } catch (error) {
     console.error('Error al crear el newsletter:', error);
-    res.status(500).json({ error: `Error al crear el newsletter: ${error.message}` });
+    res.status(100).json({ error: `Error al crear el newsletter: ${error.message}` });
+  }
+});
+
+app.post('/api/readings', authenticateToken, authorizeCapellan, async (req, res) => {
+  const { title, content } = req.body;
+
+  try {
+    const newReading = await prisma.readings.create({
+      data: { title, content }
+    });
+    res.json(newReading);
+  } catch (error) {
+    console.error('Error al crear la lectura:', error);
+    res.status(500).json({ error: `Error al crear la lectura: ${error.message}` });
   }
 });
 
@@ -125,9 +139,7 @@ app.post('/api/readings', authenticateToken, authorizeCapellan, async (req, res)
   }
 });
 
-// Rutas públicas para obtener datos
 
-// Obtener todas las misas
 app.get('/api/masses', async (req, res) => {
   try {
     const masses = await prisma.masses.findMany();
@@ -160,7 +172,27 @@ app.get('/api/notices', async (req, res) => {
   }
 });
 
-// Rutas protegidas para eliminar datos
+app.get('/api/readings', async (req, res) => {
+  try {
+    const readings = await prisma.readings.findMany();
+    res.json(readings);
+  } catch (error) {
+    console.error('Error al obtener las lecturas:', error);
+    res.status(500).json({ error: 'Error al obtener las lecturas' });
+  }
+});
+
+app.get('/api/newsletters', async (req, res) => {
+  try {
+    const newsletters = await prisma.newsletters.findMany();
+    res.json(newsletters);
+  } catch (error) {
+    console.error('Error al obtener las noticias:', error);
+    res.status(500).json({ error: 'Error al obtener las noticias' });
+  }
+});
+
+
 
 // Eliminar una misa
 app.delete('/api/masses/:id', authenticateToken, authorizeCapellan, async (req, res) => {
