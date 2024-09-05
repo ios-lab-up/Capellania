@@ -1,4 +1,4 @@
-From node:18
+FROM node:18
 
 WORKDIR /app
 
@@ -9,5 +9,8 @@ RUN npm install
 COPY .. ./
 
 EXPOSE 3000
+
+
+RUN  npx prisma generate
 
 CMD ["node", "server.js"]
