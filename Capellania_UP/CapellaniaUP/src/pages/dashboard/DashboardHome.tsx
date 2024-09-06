@@ -28,17 +28,9 @@ const DashboardHome: React.FC = () => {
             </span>
             <span className="text-xl font-semibold text-gray-800">Agregar Misa o Evento</span>
           </Link>
+  
           <Link
             to="/dashboard/add-notice"
-            className="flex items-center justify-center bg-white shadow-lg rounded-lg p-6 transform hover:scale-105 transition"
-          >
-            <span className="mr-2">
-              <FaBullhorn size={24} />
-            </span>
-            <span className="text-xl font-semibold text-gray-800">Agregar Aviso</span>
-          </Link>
-          <Link
-            to="/dashboard/add-newsletter"
             className="flex items-center justify-center bg-white shadow-lg rounded-lg p-6 transform hover:scale-105 transition"
           >
             <span className="mr-2">

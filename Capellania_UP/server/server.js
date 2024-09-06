@@ -91,25 +91,12 @@ app.post('/api/notices', authenticateToken, authorizeCapellan, async (req, res) 
     });
     res.json(newNotice);
   } catch (error) {
-    console.error('Error al crear el aviso:', error);
-    res.status(500).json({ error: `Error al crear el aviso: ${error.message}` });
+    console.error('Error al crear la noticia:', error);
+    res.status(500).json({ error: `Error al crear la noticia: ${error.message}` });
   }
 });
 
-// Crear un nuevo newsletter con imagen
-app.post('/api/newsletters', authenticateToken, authorizeCapellan, async (req, res) => {
-  const { title, imageUrl, content } = req.body;
 
-  try {
-    const newNewsletter = await prisma.newsletters.create({
-      data: { title, imageUrl, content }
-    });
-    res.json(newNewsletter);
-  } catch (error) {
-    console.error('Error al crear el newsletter:', error);
-    res.status(100).json({ error: `Error al crear el newsletter: ${error.message}` });
-  }
-});
 
 app.post('/api/readings', authenticateToken, authorizeCapellan, async (req, res) => {
   const { title, content } = req.body;
@@ -182,15 +169,7 @@ app.get('/api/readings', async (req, res) => {
   }
 });
 
-app.get('/api/newsletters', async (req, res) => {
-  try {
-    const newsletters = await prisma.newsletters.findMany();
-    res.json(newsletters);
-  } catch (error) {
-    console.error('Error al obtener las noticias:', error);
-    res.status(500).json({ error: 'Error al obtener las noticias' });
-  }
-});
+
 
 
 

@@ -17,7 +17,7 @@ const AddNotice: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4100/api/notices",
+        "http://localhost:3000/api/notices",
         {
           title,
           content,
@@ -46,7 +46,7 @@ const AddNotice: React.FC = () => {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
-          Agregar Aviso
+          Agregar Noticia
         </h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -76,7 +76,7 @@ const AddNotice: React.FC = () => {
             type="submit"
             className="w-full py-3 bg-[#176AE5] text-white font-semibold rounded-lg hover:bg-[#0F5ACC] transition"
           >
-            Agregar Aviso
+            Agregar Noticia
           </button>
         </form>
       </div>
