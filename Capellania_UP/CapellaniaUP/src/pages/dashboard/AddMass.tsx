@@ -19,7 +19,7 @@ const AddMass: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4100/api/events",
+        "http://localhost:3000/api/events",
         {
           date,
           time,

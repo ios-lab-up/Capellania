@@ -4,6 +4,9 @@ import axios from "axios";
 const AddNotice: React.FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [imageUrl, setImageUrl] = useState(""); // Estado para la URL de la imagen
+  const [summary, setSummary] = useState(""); // Estado para el resumen
+  const [reference, setReference] = useState(""); // Nuevo estado para la referencia
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,6 +24,9 @@ const AddNotice: React.FC = () => {
         {
           title,
           content,
+          imageUrl,
+          summary,
+          reference, // Incluye la referencia en el cuerpo de la solicitud
         },
         {
           headers: {
@@ -49,6 +55,7 @@ const AddNotice: React.FC = () => {
           Agregar Noticia
         </h1>
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Campo para el título */}
           <div>
             <label className="block text-lg font-medium text-gray-700">
               Título
@@ -58,9 +65,12 @@ const AddNotice: React.FC = () => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#176AE5]"
+              placeholder="Título "
               required
             />
           </div>
+
+          {/* Campo para el contenido */}
           <div>
             <label className="block text-lg font-medium text-gray-700">
               Contenido
@@ -69,9 +79,42 @@ const AddNotice: React.FC = () => {
               value={content}
               onChange={(e) => setContent(e.target.value)}
               className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#176AE5]"
+              placeholder="Escriba el contenido"
               rows={6}
             />
           </div>
+
+
+          {/* Campo para la URL de la imagen */}
+          <div>
+            <label className="block text-lg font-medium text-gray-700">
+              URL de la Imagen
+            </label>
+            <input
+              type="text"
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
+              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#176AE5]"
+              placeholder="https://example.com/imagen.jpg"
+              required
+            />
+          </div>
+
+          {/* Nuevo campo para la referencia */}
+          <div>
+            <label className="block text-lg font-medium text-gray-700">
+              Referencia
+            </label>
+            <input
+              type="text"
+              value={reference}
+              onChange={(e) => setReference(e.target.value)}
+              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#176AE5]"
+              placeholder="https://example.com/fuente-referencia"
+            />
+          </div>
+
+          {/* Botón para enviar el formulario */}
           <button
             type="submit"
             className="w-full py-3 bg-[#176AE5] text-white font-semibold rounded-lg hover:bg-[#0F5ACC] transition"

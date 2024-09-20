@@ -3,7 +3,7 @@ import axios from "axios";
 
 const AddNewsletter: React.FC = () => {
   const [title, setTitle] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+
   const [content, setContent] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -15,7 +15,6 @@ const AddNewsletter: React.FC = () => {
         "http://localhost:3000/api/newsletters",
         {
           title,
-          imageUrl,
           content,
         },
         {
@@ -49,18 +48,7 @@ const AddNewsletter: React.FC = () => {
               required
             />
           </div>
-          <div>
-            <label className="block text-lg font-medium text-gray-700">
-              URL de la Imagen
-            </label>
-            <input
-              type="text"
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#176AE5]"
-              required
-            />
-          </div>
+       
           <div>
             <label className="block text-lg font-medium text-gray-700">
               Contenido

@@ -170,9 +170,6 @@ app.get('/api/readings', async (req, res) => {
 });
 
 
-
-
-
 // Eliminar una misa
 app.delete('/api/masses/:id', authenticateToken, authorizeCapellan, async (req, res) => {
   const { id } = req.params;
@@ -204,11 +201,11 @@ app.delete('/api/events/:id', authenticateToken, authorizeCapellan, async (req, 
 });
 
 // Eliminar un aviso
-app.delete('/api/notices/:id', authenticateToken, authorizeCapellan, async (req, res) => {
+app.get('/api/notices/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    await prisma.notices.delete({
+    await prisma.notices.get({
       where: { id: parseInt(id) }
     });
     res.status(204).send(); // No Content
