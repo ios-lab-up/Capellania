@@ -14,7 +14,7 @@ const ViewEvents: React.FC = () => {
   const fetchEvents = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/events"
+        "http://localhost:3000/api/events"
       );
       setEvents(response.data);
     } catch (error) {
@@ -35,7 +35,7 @@ const ViewEvents: React.FC = () => {
     }
 
     try {
-      await axios.delete(`http://localhost:4000/api/events/${id}`, {
+      await axios.delete(`http://localhost:3000/api/events/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Asegúrate de incluir el token aquí
         },
